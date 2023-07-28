@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>City of Calgary Datasets</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body onload="handleDatasetChange(event)">
+
+  <div class="container">
+
+    <h2>Welcome to the City of Calgary Datasets</h2>
+    <p><strong>Select a dataset to search:</strong></p>
+
+    <select id="datasetDropdown">
+      <option></option>
+      <option value="trafficIncidents">Traffic Incidents</option>
+      <option value="trafficCameras">Traffic Cameras</option>
+      <option value="crimeStats">Crime Stats</option>
+      <option value="buildingPermits">Building Permits</option>
+    </select>
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
