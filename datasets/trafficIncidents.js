@@ -1,12 +1,9 @@
 fetch('https://data.calgary.ca/resource/35ra-9556.json')
     .then(response => response.json())
     .then(data => {
-        // Save the data in a variable to use later for filtering
         const incidentsData = data;
-        // Populate the incidents table with all data initially
         populateIncidents(incidentsData);
 
-        // Add event listeners to input fields for filtering
         document.getElementById('search-incident-info').addEventListener('keyup', () => filterIncidents(incidentsData));
         document.getElementById('search-description').addEventListener('keyup', () => filterIncidents(incidentsData));
         document.getElementById('search-id').addEventListener('keyup', () => filterIncidents(incidentsData));

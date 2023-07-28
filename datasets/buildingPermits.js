@@ -1,7 +1,35 @@
-const data = fetch('https://data.calgary.ca/resource/c2es-76ed.json')
+fetch('https://data.calgary.ca/resource/c2es-76ed.json')
     .then(response => response.json())
-    .then(data => populatePermits(data))
+    .then(data => {
+        const permitData = data;
+        populatePermits(permitData);
+
+        document.getElementById('search-permit-number').addEventListener('keyup', () => filterPermits(permitData));
+        document.getElementById('search-status').addEventListener('keyup', () => filterPermits(permitData));
+        document.getElementById('search-permit-type').addEventListener('keyup', () => filterPermits(permitData));
+    })
     .catch(error => console.error('Error loading search form:', error));
+
+
+
+function filterPermits(data) {
+    var searchPermitNumber = document.getElementById('search-permit-number').value.toLowerCase();
+    var searchStatus = document.getElementById('search-status').value.toLowerCase();
+    var searchPermitType = document.getElementById('search-permit-type').value.toLowerCase();
+
+    var filteredData = data.filter(function (permit) {
+        return (
+            permit.permitnum.toLowerCase().includes(searchPermitNumber) &&
+            permit.statuscurrent.toLowerCase().includes(searchStatus) &&
+            permit.permittype.toLowerCase().includes(searchPermitType)
+        );
+    });
+
+    // Clear the existing table and populate with the filtered data
+    var container = document.getElementById('permit-container');
+    container.innerHTML = '';
+    populatePermits(filteredData);
+}
 
 
 function createPermitRow(permit) {
