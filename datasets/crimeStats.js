@@ -1,7 +1,35 @@
-const data = fetch('https://data.calgary.ca/resource/848s-4m4z.json')
+fetch('https://data.calgary.ca/resource/848s-4m4z.json')
     .then(response => response.json())
-    .then(data => populateCrimes(data))
+    .then(data => {
+        const crimeData = data;
+        populateCrimes(crimeData);
+
+        document.getElementById('search-sector').addEventListener('keyup', () => filterCrimes(crimeData));
+        document.getElementById('search-category').addEventListener('keyup', () => filterCrimes(crimeData));
+        document.getElementById('search-count').addEventListener('keyup', () => filterCrimes(crimeData));
+    })
     .catch(error => console.error('Error loading search form:', error));
+
+
+
+function filterCrimes(data) {
+    var searchSector = document.getElementById('search-sector').value.toLowerCase();
+    var searchCategory = document.getElementById('search-category').value.toLowerCase();
+    var searchCount = document.getElementById('search-count').value.toLowerCase();
+
+    var filteredData = data.filter(function (crime) {
+        return (
+            crime.sector.toLowerCase().includes(searchSector) &&
+            crime.group_category.toLowerCase().includes(searchCategory) &&
+            crime.count.toLowerCase().includes(searchCount)
+        );
+    });
+
+    var container = document.getElementById('crime-container');
+    container.innerHTML = '';
+    populateCrimes(filteredData);
+}
+
 
 function createCrimeRow(crime) {
     var row = document.createElement('tr');
