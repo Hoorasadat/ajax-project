@@ -25,7 +25,6 @@ function filterPermits(data) {
         );
     });
 
-    // Clear the existing table and populate with the filtered data
     var container = document.getElementById('permit-container');
     container.innerHTML = '';
     populatePermits(filteredData);
@@ -53,7 +52,6 @@ function createPermitRow(permit) {
     return row;
 }
 
-// Function to add all incident elements to the container
 function populatePermits(data) {
     var container = document.getElementById('permit-container');
     data.forEach(function (permit) {

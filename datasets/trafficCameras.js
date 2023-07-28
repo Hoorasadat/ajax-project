@@ -1,7 +1,35 @@
-const data = fetch('https://data.calgary.ca/resource/k7p9-kppz.json')
+fetch('https://data.calgary.ca/resource/k7p9-kppz.json')
     .then(response => response.json())
-    .then(data => populateCameras(data))
+    .then(data => {
+        const cameraData = data;
+        populateCameras(cameraData);
+
+        document.getElementById('search-Camera-url').addEventListener('keyup', () => filterCameras(cameraData));
+        document.getElementById('search-quadrant').addEventListener('keyup', () => filterCameras(cameraData));
+        document.getElementById('search-camera-location').addEventListener('keyup', () => filterCameras(cameraData));
+    })
     .catch(error => console.error('Error loading search form:', error));
+
+
+
+function filterCameras(data) {
+    var searchCameraURL = document.getElementById('search-Camera-url').value.toLowerCase();
+    var searchQuadrant = document.getElementById('search-quadrant').value.toLowerCase();
+    var searchCameraLocation = document.getElementById('search-camera-location').value.toLowerCase();
+
+    var filteredData = data.filter(function (camera) {
+        return (
+            camera.camera_url.url.toLowerCase().includes(searchCameraURL) &&
+            camera.quadrant.toLowerCase().includes(searchQuadrant) &&
+            camera.camera_location.toLowerCase().includes(searchCameraLocation)
+        );
+    });
+
+    // Clear the existing table and populate with the filtered data
+    var container = document.getElementById('camera-container');
+    container.innerHTML = '';
+    populateCameras(filteredData);
+}
 
 
 function createCameraRow(camera) {
@@ -21,7 +49,6 @@ function createCameraRow(camera) {
     return row;
     }
 
-// Function to add all camera rows to the table
 function populateCameras(data) {
     var container = document.getElementById('camera-container');
     data.forEach(function (camera) {
