@@ -59,3 +59,23 @@ td {
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+
+input[type="text"] {
+  padding: 8px 12px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Optional: Add styles for placeholder text */
+input[type="text"]::placeholder {
+  color: #aaa;
+}
+
+/* Optional: Style for when the input is focused */
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
